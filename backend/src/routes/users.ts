@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
-import { check, ValidationError, validationResult } from "express-validator";
+import { check, validationResult } from "express-validator";
 import verifyToken from "../middleware/auth";
 
 const router = express.Router();
@@ -32,12 +32,9 @@ router.post(
     }),
   ],
   async (req: Request, res: Response) => {
-    const errorFormatter = (error: ValidationError) => {
-      return error.msg;
-    };
-    const result = validationResult(req).formatWith(errorFormatter);
-    if (!result.isEmpty()) {
-      return res.status(400).json({ message: result.array() });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array() });
     }
 
     try {

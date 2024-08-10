@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { check, ValidationError, validationResult } from "express-validator";
+import { check, validationResult } from "express-validator";
 import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -16,12 +16,9 @@ router.post(
     }),
   ],
   async (req: Request, res: Response) => {
-    const errorFormatter = (error: ValidationError) => {
-      return error.msg;
-    };
-    const result = validationResult(req).formatWith(errorFormatter);
-    if (!result.isEmpty()) {
-      return res.status(400).json({ message: result.array() });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array() });
     }
 
     const { email, password } = req.body;
