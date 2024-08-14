@@ -1,6 +1,10 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
+import {
+  UserType,
+} from "../../backend/src/models/user";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+import axios from 'axios';
 
 
 export const register = async (formData: RegisterFormData) => {
@@ -58,4 +62,42 @@ export const signOut = async () => {
   if (!response.ok) {
     throw new Error("Error during sign out");
   }
+};
+/*
+export const fetchMyImages = async (): Promise<UserType> => {
+  const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error("Error fetching user");
+  }
+  return response.json();
+};
+*/
+export const fetchMyImages = async (): Promise<string[]> => {
+  try {
+    const response = await axios.get('${API_BASE_URL}/api/users/me/images');
+    
+    // Assuming the response data is structured like the example above
+    const images: string[] = response.data.images;
+
+    return images;
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    throw error;
+  }
+};
+
+export const addMyImage = async (imageFormData: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/my-images`, {
+    method: "POST",
+    credentials: "include",
+    body: imageFormData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to add image");
+  }
+
+  return response.json();
 };

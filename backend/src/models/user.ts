@@ -6,13 +6,18 @@ export type UserType = {
     password: string;
     firstName: string;
     lastName: string;
+    currCalGoal: number;
+    ProgressPictures: String[];
 };
+
 
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    currCalGoal: {type: Number, required: false },
+    ProgressPictures: [{type: String, required: false}],
   });
   
   userSchema.pre("save", async function (next) {

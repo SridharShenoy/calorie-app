@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import SignOutButton from "./SignOutButton";
+import { MenuHTMLAttributes } from "react";
 
 const Header = () => {
     const {isLoggedIn} = useAppContext();
@@ -12,11 +13,22 @@ const Header = () => {
                 </span>
                 <span className="flex space-x-2">
                     {isLoggedIn ? <>
-                        <Link className="flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600" to="/my-bookings">My Bookings</Link>
-                        <Link className= "flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600" to="/my-hotels">My Hotels</Link>
+                        <ul className="flex space-x-6">
+                            <li className="relative group">
+                                <button className="py-2 border flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600">
+                                My Progress <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <ul className="mt-0 border absolute hidden group-hover:block bg-blue-800 text-white mt-2 py-2 w-40 rounded shadow-lg">
+                                <li>
+                                    <Link to="/my-progress-pictures" className="block px-4 py-2 hover:bg-blue-600 hover:border rounded">Progess Pictures</Link>
+                                </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <Link className= "border flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600 shadow-lg" to="/add-log"> Add Daily Log </Link>
                         <SignOutButton />
                     </>:
-                    <Link to="/sign-in" className="rounded-md bg-white flex item-center text-blue-600 px-3 font-bold hover:bg-gray-200">
+                    <Link to="/sign-in" className="text-blue-600 px-3 py-1 font-bold bg-white rounded-md hover:bg-gray-200 shadow-lg">
                     Sign In
                     </Link>}
                     

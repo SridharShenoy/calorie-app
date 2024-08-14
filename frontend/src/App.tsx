@@ -7,8 +7,12 @@ import {
 import Layout from "./layouts/Layout";
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
+import { useAppContext } from "./contexts/AppContext";
+import AddLog from "./pages/addLog";
+import ProgPics from "./pages/progressPictures";
 
 const App = () => {
+  const { isLoggedIn } = useAppContext();
   return (
     <Router>
       <Routes>
@@ -32,6 +36,26 @@ const App = () => {
         />
         <Route path="/sign-in" element={<Layout><SignIn /></Layout>}
         />
+        {isLoggedIn && (
+          <>
+            <Route
+              path="/add-log"
+              element={
+                <Layout>
+                  <AddLog />
+                </Layout>
+              }
+            />
+            <Route
+              path="/my-progress-pictures"
+              element={
+                <Layout>
+                  <ProgPics/>
+                </Layout>
+              }
+              />
+          </>
+        )}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
