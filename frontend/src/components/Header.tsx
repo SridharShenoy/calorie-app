@@ -22,6 +22,9 @@ const Header = () => {
                                 <li>
                                     <Link to="/my-progress-pictures" className="block px-4 py-2 hover:bg-blue-600 hover:border rounded">Progess Pictures</Link>
                                 </li>
+                                <li>
+                                    <Link to="/my-logs" className="block px-4 py-2 hover:bg-blue-600 hover:border rounded">My Logs</Link>
+                                </li>
                                 </ul>
                             </li>
                         </ul>
