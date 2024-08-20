@@ -16,7 +16,6 @@ type Props = {
 const ManageImageForm = ({ onSave, user }: Props) => {
   const formMethods = useForm<ImageFormData>();
   const { handleSubmit, reset } = formMethods;
-
   useEffect(() => {
     reset(user);
   }, [user, reset]);
@@ -44,9 +43,9 @@ const ManageImageForm = ({ onSave, user }: Props) => {
         <span className="flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
+            className="rounded-md bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
           >
-            submit
+            Save
           </button>
         </span>
       </form>

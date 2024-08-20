@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
-const ProgressPictures = () => {
+const ProgressPictures = ({refreshKey}) => {
   const [images, setImages] = useState([]);
-  const [hoveredIndex, setHoveredIndex] = useState(null); // New state for tracking hovered image
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/my-images/progress-pictures`, {
@@ -18,14 +18,12 @@ const ProgressPictures = () => {
       .catch(error => {
         console.error('Error fetching progress pictures:', error);
       });
-  }, []);
+  }, [refreshKey]);
 
   const handleRemove = (index) => {
-    // Remove the image from the state
     const updatedImages = images.filter((_, i) => i !== index);
     setImages(updatedImages);
 
-    // Send a DELETE request to remove the image from the backend
     fetch(`${API_BASE_URL}/api/my-images/progress-pictures/${index}`, {
       method: 'DELETE',
       credentials: 'include',

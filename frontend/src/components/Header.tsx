@@ -4,6 +4,7 @@ import SignOutButton from "./SignOutButton";
 import { MenuHTMLAttributes } from "react";
 
 const Header = () => {
+    const today = new Date().toISOString().split('T')[0];
     const {isLoggedIn} = useAppContext();
     return (
         <div className="bg-gradient-to-r from-emerald-800 to-lime-600 py-6">
@@ -14,11 +15,11 @@ const Header = () => {
                 <span className="flex space-x-2">
                     {isLoggedIn ? <>
                         <ul className="flex space-x-6">
-                            <li className="relative group">
+                            <li className="space-y-0 relative group">
                                 <button className="py-2 border flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600">
                                 My Progress <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                                 </button>
-                                <ul className="mt-0 border absolute hidden group-hover:block bg-blue-800 text-white mt-2 py-2 w-40 rounded shadow-lg">
+                                <ul className="border absolute hidden group-hover:block bg-blue-800 text-white mt-2 py-2 w-40 rounded shadow-lg">
                                 <li>
                                     <Link to="/my-progress-pictures" className="block px-4 py-2 hover:bg-blue-600 hover:border rounded">Progess Pictures</Link>
                                 </li>
@@ -28,7 +29,7 @@ const Header = () => {
                                 </ul>
                             </li>
                         </ul>
-                        <Link className= "border flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600 shadow-lg" to="/add-log"> Add Daily Log </Link>
+                        <Link className= "border flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600 shadow-lg" to={`/add-log/${today}`}> Add Daily Log </Link>
                         <SignOutButton />
                     </>:
                     <Link to="/sign-in" className="text-blue-600 px-3 py-1 font-bold bg-white rounded-md hover:bg-gray-200 shadow-lg">

@@ -39,7 +39,7 @@ const App = () => {
         {isLoggedIn && (
           <>
             <Route
-              path="/add-log"
+              path="/add-log/:date"
               element={
                 <Layout>
                   <AddLog />
