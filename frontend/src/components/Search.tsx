@@ -20,7 +20,7 @@ const USDAFoodSearch: React.FC = () => {
   const [query, setQuery] = useState<string>('');
   const [results, setResults] = useState<FoodItem[]>([]);
 
-  const handleSearch = (query) => {
+  const handleSearch = (query: string) => {
     fetch(`${API_BASE_URL}/api/search-foods/${query}`, {method: 'GET', credentials:'include'})
       .then(response => response.json())
       .then(data => {

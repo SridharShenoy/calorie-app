@@ -1,6 +1,6 @@
 import { FormProvider, useForm, useFieldArray } from "react-hook-form";
 import { useEffect, useState, useRef } from "react";
-import { logType } from "../../../backend/src/models/log.ts";
+import { logType } from "../../../../../backend/src/models/log.ts";
 
 export type LogFormData = {
     journalEntry: string;

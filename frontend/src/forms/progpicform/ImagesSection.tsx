@@ -6,21 +6,9 @@ const ImagesSection = () => {
     register,
     formState: { errors },
     watch,
-    setValue,
   } = useFormContext<ImageFormData>();
 
   const existingImageUrls = watch("imageUrls");
-
-  const handleDelete = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    imageUrl: string
-  ) => {    
-    event.preventDefault();
-    setValue(
-      "imageUrls",
-      existingImageUrls.filter((url) => url !== imageUrl)
-    );
-  };
 
   return (
     <div>

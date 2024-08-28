@@ -1,7 +1,6 @@
 import {Link} from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import SignOutButton from "./SignOutButton";
-import { MenuHTMLAttributes } from "react";
 
 const Header = () => {
     const date = new Date();
