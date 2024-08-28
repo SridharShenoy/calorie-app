@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
-const ProgressPictures = ({refreshKey}) => {
-  const [images, setImages] = useState([]);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+interface ProgressPicturesProps {
+  refreshKey: string | number;
+}
+
+const ProgressPictures: React.FC<ProgressPicturesProps> = ({ refreshKey }) => {
+  const [images, setImages] = useState<string[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/my-images/progress-pictures`, {
@@ -20,7 +24,7 @@ const ProgressPictures = ({refreshKey}) => {
       });
   }, [refreshKey]);
 
-  const handleRemove = (index) => {
+  const handleRemove = (index: number) => {
     const updatedImages = images.filter((_, i) => i !== index);
     setImages(updatedImages);
 
@@ -28,14 +32,14 @@ const ProgressPictures = ({refreshKey}) => {
       method: 'DELETE',
       credentials: 'include',
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to delete image');
-      }
-    })
-    .catch(error => {
-      console.error('Error deleting image:', error);
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to delete image');
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting image:', error);
+      });
   };
 
   return (
