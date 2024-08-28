@@ -7,6 +7,7 @@ export type itemType = {
 }
 */
 export type logType = {
+    _id: string;
     goalCal: number;
     currCal: number;
     logItems: { name: string; calories: number }[];
