@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import ImagesSection from "./ImagesSection";
-import { UserType } from "../../../../../backend/src/models/user.ts";
+import { UserType } from "../../../../backend/src/models/user.ts";
 import { useEffect } from "react";
 
 export type ImageFormData = {
