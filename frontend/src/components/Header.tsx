@@ -4,7 +4,10 @@ import SignOutButton from "./SignOutButton";
 import { MenuHTMLAttributes } from "react";
 
 const Header = () => {
-    const today = new Date().toISOString().split('T')[0];
+    const date = new Date();
+    date.setHours(0,0,0,0);
+
+    const today = date.toISOString().split('T')[0];
     const {isLoggedIn} = useAppContext();
     return (
         <div className="bg-gradient-to-r from-emerald-800 to-lime-600 py-6">
@@ -30,6 +33,7 @@ const Header = () => {
                             </li>
                         </ul>
                         <Link className= "border flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600 shadow-lg" to={`/add-log/${today}`}> Add Daily Log </Link>
+                        <Link className= "border flex items-center text-white px-3 rounded-md fold-bold hover:bg-blue-600 shadow-lg" to={`/set-calories`}> Set Calorie Goal </Link>
                         <SignOutButton />
                     </>:
                     <Link to="/sign-in" className="text-blue-600 px-3 py-1 font-bold bg-white rounded-md hover:bg-gray-200 shadow-lg">

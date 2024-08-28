@@ -10,6 +10,9 @@ import SignIn from "./pages/SignIn";
 import { useAppContext } from "./contexts/AppContext";
 import AddLog from "./pages/addLog";
 import ProgPics from "./pages/progressPictures";
+import NotFoundPage from "./pages/404";
+import CalorieChangeReq from "./pages/goalCalChange";
+import LogsDisplay from "./pages/view-logs";
 
 const App = () => {
   const { isLoggedIn } = useAppContext();
@@ -32,6 +35,14 @@ const App = () => {
             </Layout>
           }
         />
+        <Route
+              path="/404"
+              element={
+                <Layout>
+                  <NotFoundPage/>
+                </Layout>
+              }
+              />
         <Route path="/register" element={<Layout><Register /></Layout>}
         />
         <Route path="/sign-in" element={<Layout><SignIn /></Layout>}
@@ -54,6 +65,22 @@ const App = () => {
                 </Layout>
               }
               />
+              <Route
+              path="/my-logs"
+              element={
+                <Layout>
+                  <LogsDisplay/>
+                </Layout>
+              }
+              />
+              <Route
+              path="/set-calories"
+              element={
+                <Layout>
+                  <CalorieChangeReq />
+                </Layout>
+              }
+            />
           </>
         )}
         <Route path="*" element={<Navigate to="/" />} />

@@ -2,10 +2,12 @@ import ManageLogForm from "../forms/logForm/ManageLogForm";
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import USDAFoodSearch from "../components/Search";
+import { useNavigate } from 'react-router-dom';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 const AddLog = () => {
+    const navigate = useNavigate();
     const { date } = useParams();
     const [log, setLog] = useState(null);
 
@@ -20,7 +22,6 @@ const AddLog = () => {
             if (!response.ok) {
                 throw new Error("Failed to save log");
             }
-            console.log("Log saved successfully");
         } catch (error) {
             console.error('Error saving log:', error);
         }
@@ -37,9 +38,9 @@ const AddLog = () => {
             if (response.ok) {
                 const data = await response.json();
                 setLog(data);
-                console.log('Log has been fetched:', data);
             } else if (response.status === 404) {
                 console.log('No log found for this date:', date);
+                navigate('/404');
             } else {
                 console.error('Failed to fetch log:', response.status, response.statusText);
             }

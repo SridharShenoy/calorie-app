@@ -5,6 +5,7 @@ import {
 } from "../../backend/src/models/user";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 import axios from 'axios';
+import { ChangeFormData } from "./pages/goalCalChange";
 
 export const register = async (formData: RegisterFormData) => {
   const response = await fetch(`${API_BASE_URL}/api/users/register`, {
@@ -39,6 +40,29 @@ export const signIn = async (formData: SignInFormData) => {
   }
   return body;
 };
+
+export const change = async (formData: ChangeFormData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/users/change-goal`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.json();
+      throw new Error(errorBody.message || "Failed to change goal.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error(error.message || "An unexpected error occurred.");
+  }
+};
+
 
 export const validateToken = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {

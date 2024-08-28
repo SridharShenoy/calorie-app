@@ -21,16 +21,13 @@ router.get(
     verifyToken,
     async (req: Request, res: Response) => {
         try {
-            // Assuming `verifyToken` adds `userId` to `req.user`
             const userId = req.userId;
 
-            // Find the user by ID
             const user = await User.findById(userId);
             if (!user) {
                 return res.status(404).send('User not found');
             }
 
-            // Respond with the user's progress pictures
             res.status(200).json({ ProgressPictures: user.ProgressPictures });
         } catch (error) {
             console.error('Error fetching progress pictures:', error);

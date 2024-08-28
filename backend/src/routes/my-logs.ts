@@ -9,12 +9,11 @@ import multer from 'multer';
 const upload = multer();
 const router = express.Router();
 
-router.get("/all",
-  verifyToken, 
+router.get("/all", verifyToken,
   async (req: Request, res: Response) => {
       try {
         const userId = req.userId;
-        const response = await Log.find({userId});
+        const response = await Log.find({ userId }).sort({ logDate: -1 });
         res.status(200).json(response)
       } catch (error) {
         res.status(500).json({ error: 'An error occurred while retrieving logs' });
@@ -22,37 +21,34 @@ router.get("/all",
   }
 );
 
-router.post("/get-log/:date", async (req, res) => {
-  console.log('did we even get here');
+router.post("/get-log/:date", verifyToken, async (req, res) => {
   try {
-    const userId = '66baedbec20b1f1d6869b4eb';
-    //const userId = req.userId;
+    const userId = req.userId;
     const dayString = req.params.date;
 
     if (!dayString.match(/^\d{4}-\d{2}-\d{2}$/)) {
       return res.status(400).json({ message: 'Invalid date format' });
     }
+    const date = new Date();
+    date.setHours(0,0,0,0);
 
-    const todayString = new Date().toISOString().split('T')[0];
+    const todayString = date.toISOString().split('T')[0];
+    const user = await User.findById(userId);
+    const goalCal = user?.currCalGoal;
 
     let response = await Log.findOne({ userId, logDate: dayString });
-
     if (!response) {
       if (todayString === dayString) {
         const user = await User.findById(userId);
         if (!user) {
-          console.log('peas');
           return res.status(404).json({ message: 'User not found' });
         }
-        response = new Log({ userId, logDate: dayString });
-        console.log('new log')
+        response = new Log({ userId, logDate: todayString, goalCal: goalCal, });
         await response.save();
       } else {
-        console.log('pumpkin')
         return res.status(404).json({ message: 'Log not found' });
       }
     }
-    console.log(response.toJSON())
     return res.status(200).json(response);
   } catch (error) {
     console.error(error);
@@ -60,31 +56,51 @@ router.post("/get-log/:date", async (req, res) => {
   }
 });
 
+
 router.post("/save/:date", upload.none(), verifyToken, async (req, res) => {
   try {
     const userId = req.userId;
-    const { weight, journalEntry } = req.body;
+    const { weight, journalEntry, logItems } = req.body;
     const logDate = req.params.date;
 
     if (!logDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
       return res.status(400).json({ message: 'Invalid date format' });
     }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(500).json({ message: 'Something went wrong' })
+    }
+    const goalCal = user.currCalGoal;
+    let parsedLogItems;
+    try {
+      parsedLogItems = logItems ? JSON.parse(logItems) : [];
+    } catch (error) {
+      return res.status(400).json({ message: 'Invalid log items format' });
+    }
+    let currCal: number = 0;
+    parsedLogItems.forEach((item: { name: string; calories: number; }) => {
+      currCal = Number(item.calories) + currCal;
+    });
 
     let existingLog = await Log.findOne({ userId, logDate });
-
+    
     if (existingLog) {
       existingLog.weight = weight;
       existingLog.journalEntry = journalEntry;
+      existingLog.logItems = parsedLogItems;
+      existingLog.currCal = currCal;
+      existingLog.goalCal = goalCal;
       await existingLog.save();
     } else {
       const newLog = new Log({
-        userId,
-        logDate,
+        userId: req.userId,
+        logDate: logDate,
         weight,
         journalEntry,
+        logItems: parsedLogItems,
+        currCal,
+        goalCal,
       });
-      newLog.weight = weight;
-      newLog.journalEntry = journalEntry;
       await newLog.save();
     }
 
@@ -94,5 +110,7 @@ router.post("/save/:date", upload.none(), verifyToken, async (req, res) => {
     res.status(500).json({ error: 'Failed to save log' });
   }
 });
+
+
 
 export default router;
