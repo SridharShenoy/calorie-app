@@ -1,8 +1,5 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
-import {
-  UserType,
-} from "../../backend/src/models/user";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 import axios from 'axios';
 import { ChangeFormData } from "./pages/goalCalChange";
