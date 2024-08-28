@@ -1,5 +1,5 @@
 import ManageLogForm from "../forms/logForm/ManageLogForm";
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import USDAFoodSearch from "../components/Search";
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 const AddLog = () => {
     const navigate = useNavigate();
-    const { date } = useParams();
+    const { date } = useParams<{ date: string }>();
     const [log, setLog] = useState(null);
 
     const saveMyLog = async (LogFormData: FormData) => {
@@ -54,7 +54,7 @@ const AddLog = () => {
 
     return (
         <div className="flex">
-            <ManageLogForm date={date} onSave={saveMyLog} log={log} />
+            <ManageLogForm date={date || ''} onSave={saveMyLog} log={log} />
             <div className="rounded-md border m-auto p-10">
                 <USDAFoodSearch />
             </div>

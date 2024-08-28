@@ -1,6 +1,6 @@
 import { FormProvider, useForm, useFieldArray } from "react-hook-form";
 import { useEffect, useState, useRef } from "react";
-import { logType } from "../../../../backend/src/models/log.ts";
+import { logType } from "../../../backend/src/models/log.ts";
 
 export type LogFormData = {
     journalEntry: string;
@@ -22,7 +22,7 @@ const ManageLogForm = ({ log, onSave, date }: Props) => {
         },
     });
 
-    const { handleSubmit, reset, control, watch } = formMethods;
+    const { handleSubmit, reset, control } = formMethods;
     const [totalCalories, setTotalCalories] = useState<number>(0);
     useEffect(() => {
         const total = log?.logItems.reduce((sum: number, item: { calories: number }) => sum + Number(item.calories), 0) || 0;

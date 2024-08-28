@@ -55,8 +55,12 @@ export const change = async (formData: ChangeFormData) => {
     }
 
     return await response.json();
-  } catch (error) {
-    throw new Error(error.message || "An unexpected error occurred.");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "An unexpected error occurred.");
+    } else {
+      throw new Error("An unexpected error occurred.");
+    }
   }
 };
 
