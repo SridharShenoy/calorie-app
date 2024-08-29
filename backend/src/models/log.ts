@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { logType } from "../shared/types";
 /*
 export type itemType = {
     userId: string;
@@ -6,16 +7,7 @@ export type itemType = {
     itemCals: number;
 }
 */
-export type logType = {
-    _id: string;
-    goalCal: number;
-    currCal: number;
-    logItems: { name: string; calories: number }[];
-    logDate: string;
-    journalEntry: string;
-    weight: number;
-    userId: string;
-};
+
 /*
 const itemSchema = new mongoose.Schema<itemType>({
     userId: { type: String, required: true },
