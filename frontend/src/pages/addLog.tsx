@@ -9,7 +9,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 const AddLog = () => {
     const navigate = useNavigate();
     const { date } = useParams<{ date: string }>();
-    const [log, setLog] = useState(null);
+    const [log, setLog] = useState<logType | undefined>(undefined);
 
     const saveMyLog = async (LogFormData: FormData) => {
         try {

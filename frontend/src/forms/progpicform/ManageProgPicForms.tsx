@@ -16,8 +16,14 @@ type Props = {
 const ManageImageForm = ({ onSave, user }: Props) => {
   const formMethods = useForm<ImageFormData>();
   const { handleSubmit, reset } = formMethods;
+
   useEffect(() => {
-    reset(user);
+    if (user) {
+      reset({
+        imageFiles: user.imageFiles as any,
+        imageUrls: user.imageUrls || []
+      });
+    }
   }, [user, reset]);
 
   const onSubmit = handleSubmit((formDataJson: ImageFormData) => {

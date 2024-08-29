@@ -2,8 +2,6 @@ import express, { Request, Response } from "express";
 import multer from "multer";
 import cloudinary from "cloudinary";
 import verifyToken from "../middleware/auth";
-import { body } from "express-validator";
-import { UserType } from "../models/user";
 import User from "../models/user";
 
 const storage = multer.memoryStorage();
@@ -57,7 +55,6 @@ router.delete('/progress-pictures/:index', verifyToken, async (req: Request, res
             return res.status(400).send('Index out of bounds');
         }
 
-        // Remove the image URL from the user's ProgressPictures array
         user.ProgressPictures.splice(index, 1);
         await user.save();
 
