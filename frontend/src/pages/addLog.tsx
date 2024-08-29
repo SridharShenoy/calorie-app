@@ -3,6 +3,16 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import USDAFoodSearch from "../components/Search";
 import { useNavigate } from 'react-router-dom';
+type logType = {
+    _id: string;
+    goalCal: number;
+    currCal: number;
+    logItems: { name: string; calories: number }[];
+    logDate: string;
+    journalEntry: string;
+    weight: number;
+    userId: string;
+};
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
