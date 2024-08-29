@@ -1,6 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
 import ImagesSection from "./ImagesSection";
-import { useEffect } from "react";
 
 export type ImageFormData = {
   imageFiles: FileList;
@@ -13,7 +12,7 @@ type Props = {
 
 const ManageImageForm = ({ onSave }: Props) => {
   const formMethods = useForm<ImageFormData>();
-  const { handleSubmit, reset } = formMethods;
+  const { handleSubmit } = formMethods;
 
   const onSubmit = handleSubmit((formDataJson: ImageFormData) => {
     const formData = new FormData();

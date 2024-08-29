@@ -1,6 +1,15 @@
 import { FormProvider, useForm, useFieldArray } from "react-hook-form";
 import { useEffect, useState, useRef } from "react";
-import { logType } from "../../../../backend/src/shared/types";
+type logType = {
+    _id: string;
+    goalCal: number;
+    currCal: number;
+    logItems: { name: string; calories: number }[];
+    logDate: string;
+    journalEntry: string;
+    weight: number;
+    userId: string;
+};
 
 export type LogFormData = {
     journalEntry: string;
