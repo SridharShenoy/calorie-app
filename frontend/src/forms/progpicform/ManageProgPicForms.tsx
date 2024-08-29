@@ -1,6 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
 import ImagesSection from "./ImagesSection";
-import { UserType } from "../../../../backend/src/shared/types";
 import { useEffect } from "react";
 
 export type ImageFormData = {
@@ -9,22 +8,12 @@ export type ImageFormData = {
 };
 
 type Props = {
-  user?: UserType;
   onSave: (imageFormData: FormData) => void;
 };
 
-const ManageImageForm = ({ onSave, user }: Props) => {
+const ManageImageForm = ({ onSave }: Props) => {
   const formMethods = useForm<ImageFormData>();
   const { handleSubmit, reset } = formMethods;
-
-  useEffect(() => {
-    if (user) {
-      reset({
-        imageFiles: user.imageFiles as any,
-        imageUrls: user.imageUrls || []
-      });
-    }
-  }, [user, reset]);
 
   const onSubmit = handleSubmit((formDataJson: ImageFormData) => {
     const formData = new FormData();
