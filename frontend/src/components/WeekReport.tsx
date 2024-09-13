@@ -52,10 +52,10 @@ const WeekReport = () => {
 let regSlope: number = 0;
   const calculateLinearRegression = (data: { date: string; weight: number }[]) => {
     const n = data.length;
-    const sumX = data.reduce((acc, curr, idx) => acc + idx, 0);
+    const sumX = data.reduce((acc, _, idx) => acc + idx, 0);
     const sumY = data.reduce((acc, curr) => acc + curr.weight, 0);
     const sumXY = data.reduce((acc, curr, idx) => acc + idx * curr.weight, 0);
-    const sumXX = data.reduce((acc, curr, idx) => acc + idx * idx, 0);
+    const sumXX = data.reduce((acc, _, idx) => acc + idx * idx, 0);
 
     const slope: number = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
     regSlope = slope;
