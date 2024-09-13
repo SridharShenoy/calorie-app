@@ -1,16 +1,10 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LogType } from '../LogType';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
-interface LogType {
-  _id: string;
-  logDate: string;
-  weight: number;
-  currCal: number;
-  goalCal: number;
-}
 
 const LogsDisplay: React.FC = () => {
   const [logs, setLogs] = useState<LogType[]>([]);
@@ -25,7 +19,7 @@ const LogsDisplay: React.FC = () => {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/my-logs/all`, {
+        const response = await fetch(`${API_BASE_URL}/api/my-logs/all-reverse`, {
           method: "GET",
           credentials: "include",
         });

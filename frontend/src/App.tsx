@@ -13,6 +13,7 @@ import ProgPics from "./pages/progressPictures";
 import NotFoundPage from "./pages/404";
 import CalorieChangeReq from "./pages/goalCalChange";
 import LogsDisplay from "./pages/view-logs";
+import ResultsPage from "./pages/data";
 
 const App = () => {
   const { isLoggedIn } = useAppContext();
@@ -57,6 +58,15 @@ const App = () => {
                 </Layout>
               }
             />
+
+            <Route
+              path="/results"
+              element={
+                <Layout>
+                  <ResultsPage />
+                </Layout>
+              }
+            />      
             <Route
               path="/my-progress-pictures"
               element={

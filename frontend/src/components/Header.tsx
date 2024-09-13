@@ -28,6 +28,9 @@ const Header = () => {
                                 <li>
                                     <Link to="/my-logs" className="block px-4 py-2 hover:bg-blue-600 hover:border rounded">My Logs</Link>
                                 </li>
+                                <li>
+                                    <Link to="/results" className="block px-4 py-2 hover:bg-blue-600 hover:border rounded">Progress Report</Link>
+                                </li>
                                 </ul>
                             </li>
                         </ul>

@@ -36,32 +36,30 @@ const AddLog = () => {
             console.error('Error saving log:', error);
         }
     };
+            const fetchLog = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/my-logs/get-log/${date}`, {
+                method: "POST",
+                credentials: "include",
+                }
+                );
+                if (response.ok) {
+                    const data = await response.json();
+                    setLog(data);
+                } else if (response.status === 404) {
+                    console.log('No log found for this date:', date);
+                    navigate('/404');
+                } else {
+                    console.error('Failed to fetch log:', response.status, response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching log:', error);
+            }
+            };
 
     useEffect(() => {
-      const fetchLog = async () => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/my-logs/get-log/${date}`, {
-              method: "POST",
-              credentials: "include",
-            }
-            );
-            if (response.ok) {
-                const data = await response.json();
-                setLog(data);
-            } else if (response.status === 404) {
-                console.log('No log found for this date:', date);
-                navigate('/404');
-            } else {
-                console.error('Failed to fetch log:', response.status, response.statusText);
-            }
-        } catch (error) {
-            console.error('Error fetching log:', error);
-        }
-      };
-
         fetchLog();
-    }, [date]);
-
+    }, []);
     return (
         <div className="flex">
             <ManageLogForm date={date || ''} onSave={saveMyLog} log={log} />

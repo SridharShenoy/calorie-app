@@ -11,6 +11,17 @@ router.get("/all", verifyToken,
   async (req: Request, res: Response) => {
       try {
         const userId = req.userId;
+        const response = await Log.find({ userId }).sort({ logDate: 1 });
+        res.status(200).json(response)
+      } catch (error) {
+        res.status(500).json({ error: 'An error occurred while retrieving logs' });
+      }
+  }
+);
+router.get("/all-reverse", verifyToken,
+  async (req: Request, res: Response) => {
+      try {
+        const userId = req.userId;
         const response = await Log.find({ userId }).sort({ logDate: -1 });
         res.status(200).json(response)
       } catch (error) {

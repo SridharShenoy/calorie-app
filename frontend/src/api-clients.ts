@@ -17,7 +17,8 @@ export const register = async (formData: RegisterFormData) => {
   const responseBody = await response.json();
 
   if (!response.ok) {
-    throw new Error(responseBody.message);
+    console.log('here')
+    throw new Error(responseBody.message || "Failed to register");
   }
 };
 
@@ -33,7 +34,7 @@ export const signIn = async (formData: SignInFormData) => {
 
   const body = await response.json();
   if (!response.ok) {
-    throw new Error(body.message);
+    throw new Error(body.message || "Failed to sign in");
   }
   return body;
 };
